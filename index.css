@@ -1,0 +1,74 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.background{
+    background:linear-gradient(to bottom,
+                                    rgba(120, 49, 255, 1.0),
+                                    rgba(120, 49, 255, 0.9),
+                                    rgba(120, 49, 255, 0.7),
+                                    rgba(120, 49, 255, 0.5),
+                                    rgba(120, 49, 255, 0.3));
+    color: white;
+    height: 100vh;
+    /* display: grid; */
+}
+
+.background h1{
+    text-align: center;
+}
+
+
+form{
+    background-color: rgb(55, 50, 50);
+    color: white;
+    margin: 0 35% 0 35%;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+
+label{
+    justify-self: flex-start;
+    margin: 20px 0 0 20px;
+}
+
+input{
+    width: 250px;
+    background-color: rgb(120, 49, 255);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 5px;
+}
+
+input::placeholder{
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.name, .birth-date, .button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 5% 0 5% 0;
+}
+
+button{
+    background-color: rgb(120, 49, 255);
+    color: white;
+    width: 70px;
+    height: 30px;
+    border: none;
+    border-radius: 5px;
+    transition: 0.5s;
+}
+
+button:hover{
+    background-color: rgb(120, 49, 255);
+    width: 100px;
+    border-radius: 0px;
+    transition: 0.5s;
+    border: 1px solid white;
+}
