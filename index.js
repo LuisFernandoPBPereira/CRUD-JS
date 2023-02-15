@@ -3,10 +3,13 @@ function print(){
     name = document.getElementById("name").value
     let birthdate = document.getElementById("birth-date").value
     let form = document.querySelector("form")
+    let table = document.getElementById("data")
+    let button = document.querySelector("button")
     
     form.addEventListener("submit", (event) => {
       event.preventDefault()
     })
+
 
     let date = new Date(birthdate);
     let formatDate = date.toLocaleDateString('pt-BR', {timeZone: 'UTC'});
@@ -21,8 +24,29 @@ function print(){
         console.log("Digite seu nome corretamente...");
     }
     else{
-        let show = `Seu nome é ${name} e seu aniversário é nesta data: ${formatDate}`
-        console.log(show);         
+        let count = 0
+        button.addEventListener("click", () => {
+            user = {
+                name: name,
+                birthdate: formatDate
+            }
+            
+            var aux = count++
+            
+            
+            localStorage.setItem(aux ,JSON.stringify(user)) 
+            console.log(localStorage);
+            
+            const pessoas = JSON.parse(localStorage.getItem(aux)) || [];
+            console.log(aux);
+            table.innerHTML = `
+            <tr>
+                <td>${pessoas.name}</td>
+                <td>${pessoas.birthdate}</td>
+            </tr>`;
+        })
+
+        
     }
 
 }
