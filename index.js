@@ -33,12 +33,15 @@ function print(){
             
             var aux = count++
             
-            
+            //Adiciona um item no localStorage em format de String no JSON
             localStorage.setItem(aux ,JSON.stringify(user)) 
             console.log(localStorage);
             
+            //Pega um item buscado no localStorage
             const pessoas = JSON.parse(localStorage.getItem(aux)) || [];
             console.log(aux);
+            
+            //Criando um espaço em uma tabela
             table.innerHTML = `
             <tr>
                 <td>${pessoas.name}</td>
