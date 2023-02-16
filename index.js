@@ -24,32 +24,36 @@ function print(){
         console.log("Digite seu nome corretamente...");
     }
     else{
-        let count = 0
-        button.addEventListener("click", () => {
             user = {
                 name: name,
                 birthdate: formatDate
             }
             
-            var aux = count++
-            
+            //Corta a primeira parte do nome ( MUDAR ISSO NO FUTURO )
+            let splitedName = user.name.split(" ")
+
             //Adiciona um item no localStorage em format de String no JSON
-            localStorage.setItem(aux ,JSON.stringify(user)) 
+            localStorage.setItem(`user${splitedName[0]}`, JSON.stringify(user)) 
             console.log(localStorage);
             
             //Pega um item buscado no localStorage
-            const pessoas = JSON.parse(localStorage.getItem(aux)) || [];
-            console.log(aux);
+            const pessoas = JSON.parse(localStorage.getItem(`user${splitedName[0]}`)) || [];
             
-            //Criando um espaço em uma tabela
-            table.innerHTML = `
-            <tr>
-                <td>${pessoas.name}</td>
-                <td>${pessoas.birthdate}</td>
-            </tr>`;
-        })
 
-        
+            //Cria um elemento TR para adicionar na tabela
+            let tr = document.createElement("tr")
+            //Cria um ID para o TR
+            tr.id = `${pessoas.name}`
+            //Adiciona o TR na tabela
+            table.appendChild(tr)
+            
+            //Pegamos o TR desejado
+            let getTr = document.getElementById(`${pessoas.name}`)
+            
+            //Criando um espaço em uma tabela com as informações necessárias
+            getTr.innerHTML = `
+                <td>${pessoas.name}</td>
+                <td>${pessoas.birthdate}</td>`;        
     }
 
 }
