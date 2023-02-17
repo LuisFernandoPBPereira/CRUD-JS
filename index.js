@@ -1,16 +1,15 @@
+var count = 0;
+
 function print(){
-    let name = ""
-    name = document.getElementById("name").value
+    let name = document.getElementById("name").value
     let birthdate = document.getElementById("birth-date").value
     let form = document.querySelector("form")
     let table = document.getElementById("data")
-    let button = document.querySelector("button")
     
     form.addEventListener("submit", (event) => {
       event.preventDefault()
     })
-
-
+    
     let date = new Date(birthdate);
     let formatDate = date.toLocaleDateString('pt-BR', {timeZone: 'UTC'});
 
@@ -24,36 +23,43 @@ function print(){
         console.log("Digite seu nome corretamente...");
     }
     else{
-            user = {
-                name: name,
-                birthdate: formatDate
-            }
-            
-            //Corta a primeira parte do nome ( MUDAR ISSO NO FUTURO )
-            let splitedName = user.name.split(" ")
+        if(localStorage.length > count){
+            count = localStorage.length
+        }
 
-            //Adiciona um item no localStorage em format de String no JSON
-            localStorage.setItem(`user${splitedName[0]}`, JSON.stringify(user)) 
-            console.log(localStorage);
-            
-            //Pega um item buscado no localStorage
-            const pessoas = JSON.parse(localStorage.getItem(`user${splitedName[0]}`)) || [];
-            
 
-            //Cria um elemento TR para adicionar na tabela
-            let tr = document.createElement("tr")
-            //Cria um ID para o TR
-            tr.id = `${pessoas.name}`
-            //Adiciona o TR na tabela
-            table.appendChild(tr)
-            
-            //Pegamos o TR desejado
-            let getTr = document.getElementById(`${pessoas.name}`)
-            
+        user = {
+            name: name,
+            birthdate: formatDate
+        }
+
+        //Adiciona um item no localStorage em format de String no JSON
+        localStorage.setItem(`${count}`, JSON.stringify(user)) 
+        console.log(localStorage);
+                
+
+        //Cria um elemento TR para adicionar na tabela
+        let tr = document.createElement("tr")
+        //Cria um ID para o TR
+        tr.id = `${count}`
+        //Adiciona o TR na tabela
+        table.appendChild(tr)
+        
+        //Pegamos o TR desejado
+        let getTr = document.getElementById(`${count}`)
+        
+        
+        
+        count++
+        
+        for (let i = 0; i < localStorage.length; i++) {
             //Criando um espaço em uma tabela com as informações necessárias
             getTr.innerHTML = `
-                <td>${pessoas.name}</td>
-                <td>${pessoas.birthdate}</td>`;        
+                    <td>${JSON.parse(localStorage[i]).name}</td>
+                    <td>${JSON.parse(localStorage[i]).birthdate}</td>`;
+            }
+
+        
     }
 
 }
