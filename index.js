@@ -66,17 +66,23 @@ function print(){
 
 }
 
+//Função para editar campo
 function edit(){    
+    //Recebo o nome do campo que o usuário deseja editar
     let name = prompt("Escreva o nome da pessoa que deseja editar")
+    //faço um FOR para percorrer o localStorage e comparar o campo que deseja editar
     for(let i = 0; i < localStorage.length; i++){
         if(name.toUpperCase() == JSON.parse(localStorage[i]).name.toUpperCase()){
+            //Um novo nome e nova data são recebidos
             let newName = prompt("Digite o novo nome")
             let newDate = prompt("Digite a nova data\nExemplo: 01/12/2000")
+            //As informações são colocadas em um objeto
             let user = {
                 name: newName,
                 birthdate: newDate
             }
             
+            //As informações são computadas no localStorage e são mostradas na tabela
             localStorage.setItem(`${i}`, JSON.stringify(user))
             let getTr = document.getElementById(`${i}`)
             getTr.innerHTML = `
@@ -90,8 +96,11 @@ function edit(){
     }
 }
 
+//Função de apagar campo
 function deleteItem(){
+    //Recebo o nome do campo que o usuário deseja apagar
     let name = prompt("Escreva o nome da pessoa que deseja Apagar")
+    //Percorro o localStorage para apagar o campo desejado
     for(let i = 0; i < localStorage.length; i++){
         let getTr = document.getElementById(`${i}`)
         if(name.toUpperCase() == JSON.parse(localStorage[i]).name.toUpperCase()){
