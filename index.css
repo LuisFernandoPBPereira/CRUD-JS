@@ -80,13 +80,26 @@ button:hover{
     margin-top: 20px;
 }
 
+.edit{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    gap: 20px;
+}
+
 #data{
     background-color: rgb(55, 50, 50);
     border-radius: 10px;
+    width: 40vw;
 }
 
 #data, td{
     padding: 7px;
+}
+
+.top{
+    gap: 20px;
 }
 
 td{

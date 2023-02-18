@@ -14,19 +14,21 @@ function print(){
     let formatDate = date.toLocaleDateString('pt-BR', {timeZone: 'UTC'});
 
     if(name.length < 3){
-        console.log("Digite seu nome corretamente...");
+        alert("Digite seu nome corretamente...");
     }
     else if(name.length > 120){
-        console.log("Seu nome não pode conter mais do que 120 caracteres...");
+        alert("Seu nome não pode conter mais do que 120 caracteres...");
     }
     else if(/[0-9]/g.test(name)){
-        console.log("Digite seu nome corretamente...");
+        alert("Digite seu nome corretamente...");
+    }
+    else if(formatDate == "Invalid Date"){
+        alert("Insira uma data")
     }
     else{
         if(localStorage.length > count){
             count = localStorage.length
         }
-
 
         user = {
             name: name,
@@ -62,4 +64,40 @@ function print(){
         
     }
 
+}
+
+function edit(){    
+    let name = prompt("Escreva o nome da pessoa que deseja editar")
+    for(let i = 0; i < localStorage.length; i++){
+        if(name.toUpperCase() == JSON.parse(localStorage[i]).name.toUpperCase()){
+            let newName = prompt("Digite o novo nome")
+            let newDate = prompt("Digite a nova data\nExemplo: 01/12/2000")
+            let user = {
+                name: newName,
+                birthdate: newDate
+            }
+            
+            localStorage.setItem(`${i}`, JSON.stringify(user))
+            let getTr = document.getElementById(`${i}`)
+            getTr.innerHTML = `
+                    <td>${JSON.parse(localStorage[i]).name}</td>
+                    <td>${JSON.parse(localStorage[i]).birthdate}</td>`;
+            alert("Usuário editado com sucesso!")
+        }
+        else{
+            alert("Nome inexistente")
+        }
+    }
+}
+
+function deleteItem(){
+    let name = prompt("Escreva o nome da pessoa que deseja Apagar")
+    for(let i = 0; i < localStorage.length; i++){
+        let getTr = document.getElementById(`${i}`)
+        if(name.toUpperCase() == JSON.parse(localStorage[i]).name.toUpperCase()){
+            // localStorage.clear()
+            getTr.remove()
+            // count = 0
+        }
+    }
 }
