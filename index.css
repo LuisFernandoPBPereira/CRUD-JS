@@ -12,7 +12,7 @@
                                     rgba(120, 49, 255, 0.5),
                                     rgba(120, 49, 255, 0.3));
     color: white;
-    height: 100vh;
+    min-height: 100vh;
     /* display: grid; */
 }
 
@@ -109,3 +109,23 @@ td{
 tr{
     text-align: center;
 }
+
+#warning{
+    background-color: rgb(55, 50, 50);
+    color: red;
+    font-size: larger;
+    font-weight: 500;
+    padding: 5px;
+    border-radius: 10px;
+    /* text-shadow: 1px 1px black; */
+}
+#success{
+    background-color: rgb(55, 50, 50);
+    color: lime;
+    font-size: larger;
+    font-weight: 500;
+    padding: 5px;
+    border-radius: 10px;
+    /* text-shadow: 1px 1px black; */
+}
+
