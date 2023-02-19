@@ -160,10 +160,10 @@ function edit(){
         
                     //i recebe o tamanho do localStorage para encerrar o FOR
                     i = localStorage.length
+                    success.innerHTML = "Usuário editado com sucesso!"
                 }
             }
         }
-        success.innerHTML = "Usuário editado com sucesso!"
     }
     catch(error){
         warning.innerHTML = "Operação Cancelada"
@@ -194,9 +194,9 @@ function deleteItem(){
                 
                 console.log(JSON.parse(localStorage[i]).statusUser);
                 getTr.remove()
+                success.innerHTML = "Usuário apagado com sucesso!"
             }
         }
-        success.innerHTML = "Usuário apagado com sucesso!"
     }
     catch(error){
         warning.innerHTML = "Operação Cancelada"
