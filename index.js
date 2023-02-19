@@ -17,7 +17,6 @@ if(localStorage.length > 0){
                         <td>${JSON.parse(localStorage[i]).birthdate}</td></tr>`;
             }
             }
-        console.log("carregou");
     } 
 }
 
@@ -80,10 +79,7 @@ function print(){
                 }
             }
             //Adiciona um item no localStorage em format de String no JSON
-            localStorage.setItem(`${count}`, JSON.stringify(user)) 
-            console.log(localStorage);
-                    
-            
+            localStorage.setItem(`${count}`, JSON.stringify(user))           
             //Cria um elemento TR para adicionar na tabela
             let tr = document.createElement("tr")
             //Cria um ID para o TR
@@ -192,7 +188,6 @@ function deleteItem(){
                 }
                 localStorage.setItem(`${i}`, JSON.stringify(user))
                 
-                console.log(JSON.parse(localStorage[i]).statusUser);
                 getTr.remove()
                 success.innerHTML = "Usuário apagado com sucesso!"
             }
