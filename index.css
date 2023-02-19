@@ -1,7 +1,16 @@
+@media (min-width: 100vw) {
+    form{
+        width: fit-content;
+    }
+    .divTable{
+        width: fit-content;
+    }
+}
 *{
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .background{
@@ -13,18 +22,20 @@
                                     rgba(120, 49, 255, 0.3));
     color: white;
     min-height: 100vh;
-    /* display: grid; */
+    
 }
 
 .background h1{
     text-align: center;
+    padding: 1% 0 1% 0;
 }
 
 
 form{
     background-color: rgb(55, 50, 50);
     color: white;
-    margin: 0 35% 0 35%;
+
+    margin: 0 auto;
     padding: 20px;
     border-radius: 10px;
 }
@@ -46,6 +57,11 @@ input{
 
 input::placeholder{
     color: rgba(255, 255, 255, 0.6);
+}
+
+input:focus {
+    box-shadow: 0 0 0 0;
+    outline: 0;
 }
 
 .name, .birth-date, .button{
@@ -71,13 +87,16 @@ button:hover{
     border-radius: 0px;
     transition: 0.5s;
     border: 1px solid white;
+    cursor: pointer;
 }
+
 
 .divTable{
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 20px;
+    /* margin-top: 20px; */
+    margin: 0 auto;
 }
 
 .edit{
@@ -91,7 +110,7 @@ button:hover{
 #data{
     background-color: rgb(55, 50, 50);
     border-radius: 10px;
-    width: 40vw;
+    width: 80vw;
 }
 
 #data, td{
@@ -104,6 +123,10 @@ button:hover{
 
 td{
     border: 1px solid white; 
+}
+
+.tdName{
+    width: 60%;
 }
 
 tr{
@@ -134,7 +157,7 @@ tr{
     justify-content: center;
     align-items: center;
     gap: 20px;
-    margin-top: 10px;
+    margin: 10px 0 10px;
     border-radius: 10px;
 }
 
