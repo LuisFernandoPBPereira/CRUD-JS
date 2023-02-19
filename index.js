@@ -12,15 +12,17 @@ if(localStorage.length > 0){
          for (let i = 0; i < localStorage.length; i++) {
             if(JSON.parse(localStorage[i]).statusUser == "Ativo"){
                 //Criando um espaço na tabela com as informações necessárias
-                table.innerHTML += `<tr id="${i}">
-                        <td>${JSON.parse(localStorage[i]).name}</td>
-                        <td>${JSON.parse(localStorage[i]).birthdate}</td></tr>`;
+                table.innerHTML += `
+                    <tr id="${i}">
+                        <td class="tdName">${JSON.parse(localStorage[i]).name}</td>
+                        <td class="tdBirthdate">${JSON.parse(localStorage[i]).birthdate}</td>
+                    </tr>`;
             }
-            }
+        }
     } 
 }
 
-function print(){
+function create(){
     try{
         success.innerHTML = ""
         warning.innerHTML = ""
@@ -40,17 +42,20 @@ function print(){
         
         if(name.length < 3){
             warning.innerHTML= "Digite seu nome corretamente...";
+            deleteWarning(warning)
         }
         else if(name.length > 120){
             warning.innerHTML="Seu nome não pode conter mais do que 120 caracteres...";
+            deleteWarning(warning)
         }
         else if(/[0-9]/g.test(name)){
             warning.innerHTML="Digite seu nome corretamente...";
+            deleteWarning(warning)
         }
-        else if(formatDate == "Invalid Date"){
-            warning.innerHTML="Insira uma data"
+        else if(formatDate == "Invalid Date" || formatDate.length > 10){
+            warning.innerHTML="Insira a data correta"
+            deleteWarning(warning)
         }
-        
         else{
             //Caso o localStorage for maior que o contador
             //o contador receber o tamanho do localStorage
@@ -58,6 +63,7 @@ function print(){
                 count = localStorage.length
             }
             
+            //Defino a estrutura do usuário em um objeto
             user = {
                 name: name,
                 birthdate: formatDate,
@@ -75,6 +81,8 @@ function print(){
                         statusUser: "Deletado" 
                     }
                     warning.innerHTML = "Usuário já existe"
+                    deleteWarning(warning)
+                    
                     i = localStorage.length
                 }
             }
@@ -86,7 +94,6 @@ function print(){
             tr.id = `${count}`
             //Adiciona o TR na tabela
             table.appendChild(tr)
-            
             //Pegamos o TR desejado
             let getTr = document.getElementById(`${count}`)
             
@@ -95,23 +102,25 @@ function print(){
             for (let i = 0; i < localStorage.length; i++) {
                 //Criando um espaço em uma tabela com as informações necessárias
                 getTr.innerHTML = `
-                <td>${JSON.parse(localStorage[i]).name}</td>
-                <td>${JSON.parse(localStorage[i]).birthdate}</td>`;
+                    <td class="tdName">${JSON.parse(localStorage[i]).name}</td>
+                    <td class="tdBirthdate">${JSON.parse(localStorage[i]).birthdate}</td>`;
             }
             if(warning.length > 0){
                 success.innerHTML = ""
             }else{
                 success.innerHTML = "Usuário cadastrado com sucesso!"
-            }   
+                deleteWarning(success)
+            }
         }
     }
     catch(error){
-        warning.innerHTML = "Erro: Não é possível persistir o salvamento de um dado já existente" 
+        warning.innerHTML = "Erro: Não é possível persistir o salvamento de um dado já existente"
+        deleteWarning(warning)
     }
 }
 
 //Função para editar campo
-function edit(){
+function update(){
     try{
         success.innerHTML = ""
         warning.innerHTML = ""
@@ -119,6 +128,7 @@ function edit(){
         let name = prompt("Escreva o nome da pessoa que deseja editar")
         if(!name){
             warning.innerHTML="Não foi possível realizar a operação..."
+            deleteWarning(warning)
         }
         //faço um FOR para percorrer o localStorage e comparar o campo que deseja editar
         for(let i = 0; i < localStorage.length; i++){
@@ -130,14 +140,17 @@ function edit(){
                 
                 if(newName == "" || newDate == ""){
                     warning.innerHTML="Insira um nome e uma data nova..."
+                    deleteWarning(warning)
                     //i recebe o tamanho do localStorage para encerrar o FOR
                     i = localStorage.length
                 }
                 else if(/[0-9]/g.test(newName)){
                     warning.innerHTML = "Digite o novo nome corretamente..."
+                    deleteWarning(warning)
                 }
                 else if(newDate.length < 10){
                     warning.innerHTML = "Digite a nova data corretamente..."
+                    deleteWarning(warning)
                 }
                 else{
                     //As informações são colocadas em um objeto
@@ -151,18 +164,20 @@ function edit(){
                     localStorage.setItem(`${i}`, JSON.stringify(user))
                     let getTr = document.getElementById(`${i}`)
                     getTr.innerHTML = `
-                            <td>${JSON.parse(localStorage[i]).name}</td>
-                            <td>${JSON.parse(localStorage[i]).birthdate}</td>`;
+                        <td class="tdName">${JSON.parse(localStorage[i]).name}</td>
+                        <td class="tdBirthdate">${JSON.parse(localStorage[i]).birthdate}</td>`;
         
                     //i recebe o tamanho do localStorage para encerrar o FOR
                     i = localStorage.length
                     success.innerHTML = "Usuário editado com sucesso!"
+                    deleteWarning(success)
                 }
             }
         }
     }
     catch(error){
         warning.innerHTML = "Operação Cancelada"
+        deleteWarning(warning)
     }
     
 }
@@ -176,6 +191,7 @@ function deleteItem(){
         let name = prompt("Escreva o nome da pessoa que deseja Apagar")
         if(!name){
             warning.innerHTML = "Não foi possível realizar a operação..."
+            deleteWarning(warning)
         }
         //Percorro o localStorage para apagar o campo desejado
         for(let i = 0; i < localStorage.length; i++){
@@ -190,11 +206,13 @@ function deleteItem(){
                 
                 getTr.remove()
                 success.innerHTML = "Usuário apagado com sucesso!"
+                deleteWarning(success)
             }
         }
     }
     catch(error){
         warning.innerHTML = "Operação Cancelada"
+        deleteWarning(warning)
     }
 }
 
@@ -203,4 +221,10 @@ function deleteAll(){
     localStorage.clear()
     //Atualiza a página
     document.location.reload(true);
+}
+
+function deleteWarning(event){
+    setTimeout(() => {
+        event.innerHTML = ""
+      }, "5000")
 }
