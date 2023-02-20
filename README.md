@@ -6,7 +6,15 @@
 </ul>
 <bt>
 <h2>Imagem do Projeto:</h2>
-<img src="https://user-images.githubusercontent.com/86135150/219917132-6bdaf8d2-dfbc-471b-b09d-e16b50f48534.png">
+<br>
+<h2 align="center">Desktop:</h2>
+<img src="https://user-images.githubusercontent.com/86135150/219983360-bd0eb466-0872-42b3-870c-bada8bfe6e5d.png">
+<br>
+<h2 align="center">Mobile:</h2>
+<div align="center">
+<img src="https://user-images.githubusercontent.com/86135150/219983415-cee2a1df-dfa5-4226-8358-3b20c3e3d79e.png">
+</div>
+
 <br>
 <br>
 <ul>
@@ -15,5 +23,4 @@
  <li>Ao inserir um usuário duplicado, o sistema impede, porém, ao apagá-lo, é necessário efetuar a ação duas vezes para apagá-lo</li>
  <li>Ao tentar editar um usuário que houve a tentativa de ser duplicado, a edição não é bem sucedida.
  <h3>Estes bug's serão corrigidos brevemente...</h3>
- <h3>O design também irá ser modelado de forma melhor</h3>
 </ul>
