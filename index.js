@@ -40,7 +40,21 @@ function create(){
         let date = new Date(birthdate);
         let formatDate = date.toLocaleDateString('pt-BR', {timeZone: 'UTC'});
         
-        if(name.length < 3){
+        //variável que verifica a existência de um usuário
+        let userExists = false
+
+        //Caso o usuário insira um nome já existente na base de dados
+        for(let i = 0; i < localStorage.length; i++){
+            if(name.toUpperCase() == JSON.parse(localStorage[i]).name.toUpperCase()){
+                userExists = true
+                i = localStorage.length
+            }
+        }
+        if(userExists == true){
+            warning.innerHTML = "Usuário já existe"
+            deleteWarning(warning)
+        }
+        else if(name.length < 3){
             warning.innerHTML= "Digite seu nome corretamente...";
             deleteWarning(warning)
         }
@@ -70,22 +84,6 @@ function create(){
                 statusUser: "Ativo" 
             }
             
-            //Caso o usuário insira um nome já existente na base de dados
-            for(let i = 0; i < localStorage.length; i++){
-                if(name.toUpperCase() == JSON.parse(localStorage[i]).name.toUpperCase()){
-                    let getTr = document.getElementById(`${i}`)
-                    getTr.remove()
-                    user = {
-                        name: name,
-                        birthdate: JSON.parse(localStorage[i]).birthdate,
-                        statusUser: "Deletado" 
-                    }
-                    warning.innerHTML = "Usuário já existe"
-                    deleteWarning(warning)
-                    
-                    i = localStorage.length
-                }
-            }
             //Adiciona um item no localStorage em format de String no JSON
             localStorage.setItem(`${count}`, JSON.stringify(user))           
             //Cria um elemento TR para adicionar na tabela
@@ -227,4 +225,55 @@ function deleteWarning(event){
     setTimeout(() => {
         event.innerHTML = ""
       }, "5000")
+}
+
+function showInformation(){
+    let span = document.getElementById("span")
+    let button = document.getElementById("button")
+    let seeMore = document.getElementById("seeMore")
+    span.innerHTML = `
+        <ul>
+            <li>
+                Seus dados estão sendo armazenados em seu
+                local storage (o armazenamento do seu
+                navegador), do qual não temos acesso.
+            </li>
+            <li>
+                Caso queira limpar seu local storage,
+                apenas clique sobre o botão "Limpar tudo".
+            </li>
+            <br>
+            <h3>Sobre o site:</h3>
+            <li>
+                Neste site, você pode cadastrar a data de aniversário 
+                de seu amigo, assim você nunca vai esquecer 😄.
+            </li>
+            <li>
+                <strong>Para os desenvolvedores:</strong> Este site foi desenvolvido
+                 para testar meus conhecimentos ao realizar um CRUD 
+                 (Create, Read, Update and Delete => Criar,
+                 Ler, Atualizar e Apagar), além de que este site não possui
+                 nenhum tipo de framework, library ou database
+            </li>
+            <li>
+                Desenvolvido e publicado por: Luis Fernando P. B. Pereira
+            </li>
+        </ul>`
+        
+        button.innerHTML = `<button id="seeMore" onclick="hideInformation()">Fechar</button>`
+
+    }
+function hideInformation(){
+    let span = document.getElementById("span")
+    let button = document.getElementById("button")
+
+    span.innerHTML = `
+    <ul>
+        <li>
+            Seus dados estão sendo armazenados em seu
+            local storage (o armazenamento do seu
+            navegador), do qual não temos acesso.
+        </li>
+    </ul>`
+    button.innerHTML = `<button id="seeMore" onclick="showInformation()">Ler mais</button>`
 }
