@@ -11,6 +11,9 @@
     .information div{
         width: fit-content;
     }
+    .confirmationForm{
+        width: fit-content;
+    }
 }
 *{
     padding: 0;
@@ -44,6 +47,12 @@ form{
     margin: 0 auto;
     padding: 20px;
     border-radius: 10px;
+}
+
+.confirmationForm{
+    color: white;
+    margin: 0 auto;
+    padding: 5px;
 }
 
 
@@ -94,6 +103,10 @@ button:hover{
     transition: 0.5s;
     border: 1px solid white;
     cursor: pointer;
+}
+
+.buttonConfirmation{
+    gap: 20px;
 }
 
 
