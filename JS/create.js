@@ -12,8 +12,10 @@ function create(){
         form.addEventListener("submit", (event) => {
           event.preventDefault()
         })
-    
+        
+        //Recebo a data em seu formato Date
         let date = new Date(birthdate);
+        //formato o tipo da data para a localização do Brasil
         let formatDate = date.toLocaleDateString('pt-BR', {timeZone: 'UTC'});
         
         //variável que verifica a existência de um usuário
@@ -21,6 +23,7 @@ function create(){
 
         //Caso o usuário insira um nome já existente na base de dados
         for(let i = 0; i < localStorage.length; i++){
+            //Se o nome recebido for igual ao armazenado, não será cadastrado
             if(name.toUpperCase() == JSON.parse(localStorage[i]).name.toUpperCase()){
                 userExists = true
                 i = localStorage.length
@@ -48,7 +51,7 @@ function create(){
         }
         else{
             //Caso o localStorage for maior que o contador
-            //o contador receber o tamanho do localStorage
+            //o contador recebe o tamanho do localStorage
             if(localStorage.length > count){
                 count = localStorage.length
             }
