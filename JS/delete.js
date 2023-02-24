@@ -25,7 +25,7 @@ function deleteItem(){
         
     }
     catch(error){
-        warning.innerHTML = "Operação Cancelada"
+        warning.innerHTML = "Erro interno"
         deleteWarning(warning)
     }
 }
@@ -78,7 +78,7 @@ function deleting(){
         }
     }
     catch(error){
-        warning.innerHTML = "Operação Cancelada"
+        warning.innerHTML = "Erro interno"
         deleteWarning(warning)
     }
 }

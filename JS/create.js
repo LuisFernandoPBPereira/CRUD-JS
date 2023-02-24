@@ -91,7 +91,7 @@ function create(){
         }
     }
     catch(error){
-        warning.innerHTML = "Erro: Não é possível persistir o salvamento de um dado já existente"
+        warning.innerHTML = "Erro interno"
         deleteWarning(warning)
     }
 }
