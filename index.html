@@ -28,20 +28,24 @@
             </div>
 
             <section class="button">
-                <button onclick="create()" type="submit">Salvar</button>
+                <button id="createButton" onclick="create()" type="submit">Salvar</button>
             </section>           
             
         </form>
         <div class="edit">
-            <button onclick="update()">Editar</button>
-            <button onclick="deleteItem()">Apagar</button>
-            <button onclick="deleteAll()">Limpar Tudo</button>
+            <button id="updateButton" onclick="update()">Editar</button>
+            <button id="deleteButton" onclick="deleteItem()">Apagar</button>
+            <button id="deleteAllButton" onclick="deleteAll()">Limpar Tudo</button>
         </div>
         <div id="status">
             <span id="warning"></span>
             <span id="success"></span>
         </div>
         
+        <div class="confirmationForm" id="confirmationForm">
+            <!-- Aqui irá aparecer o formulário para editar e apagar -->
+        </div>
+
         <div class="divTable">
             <table id="data">
                 <tr class="top">
@@ -70,5 +74,10 @@
         </div>
     </div>
     <script src="index.js"></script>
+    <script src="./JS/create.js"></script>
+    <script src="./JS/update.js"></script>
+    <script src="./JS/delete.js"></script>
+    <script src="./JS/cancelAction.js"></script>
+    <script src="./JS/buttonActions.js"></script>
 </body>
 </html>
