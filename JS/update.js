@@ -50,6 +50,7 @@ function confirmUpdate(){
         let name = document.getElementById("nameConfirmation").value
         let newName = document.getElementById("newNameConfirmation").value
         let newDate = document.getElementById("newBirthdateConfirmation").value
+        let userExists = true
          
         //Se o nome e a data estiverem vazios
         if(newName == "" && newDate == ""){
@@ -83,10 +84,16 @@ function confirmUpdate(){
             }
             //Se não for fornecido o nome, ele permanecerá igual
             if(newName == ""){
-                user = {
-                    name: name,
-                    birthdate: formatDate,
-                    statusUser: "Ativo"
+                for(let i = 0; i < localStorage.length; i++){
+                    if(name.toUpperCase() == JSON.parse(localStorage[i]).name.toUpperCase()){
+                        let defaultName = JSON.parse(localStorage[i]).name
+                        user = {
+                            name: defaultName,
+                            birthdate: formatDate,
+                            statusUser: "Ativo"
+                        }
+                        i = localStorage.length
+                    }
                 }
             }
             //Se não for fornecido a data, ela permanecerá igual
@@ -107,6 +114,7 @@ function confirmUpdate(){
                 //Atualizando o usuário se ele existir no localStorage
                 if(name.toUpperCase() == JSON.parse(localStorage[i]).name.toUpperCase() &&
                 JSON.parse(localStorage[i]).statusUser == "Ativo"){
+                    userExists = true
                     //As informações são computadas no localStorage e são mostradas na tabela
                     localStorage.setItem(`${i}`, JSON.stringify(user))
                     let getTr = document.getElementById(`${i}`)
@@ -126,11 +134,13 @@ function confirmUpdate(){
                 //Caso contrário, aparecerá um aviso na tela
                 else if(name.toUpperCase() != JSON.parse(localStorage[i]).name.toUpperCase() &&
                 JSON.parse(localStorage[i]).statusUser == "Ativo"){
-                    warning.innerHTML = "Usuário inexistente"
-                    deleteWarning(warning)
-                    activeButtons()
-                    i = localStorage.length
+                    userExists = false
                 }
+            }
+            if(userExists == false){
+                warning.innerHTML = "Usuário inexistente"
+                deleteWarning(warning)
+                activeButtons()
             }
         }           
     } catch (error) {
