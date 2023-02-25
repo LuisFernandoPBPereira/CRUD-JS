@@ -5,8 +5,6 @@ function update(){
         warning.innerHTML = ""
         //Desabilito os botões que não vão ser usados na atualização
         disableButtons()
-        
-        //Crio o formulário para editar o usuário desejado
         let form = document.getElementById("confirmationForm")
         form.innerHTML = `
             <div>
@@ -16,81 +14,30 @@ function update(){
                     <br>
                 </div>
             </div>
+            <div>
+                <label for="name"><strong>Editando</strong></label>
+                <br>
+                <br>
+                <label for="name">Nome</label>
+                <div class="name">
+                <input class="form-field js-field" id="newNameConfirmation" maxlength="120" name="name" required type="text" placeholder="Digite seu nome" value="">
+                <br>
+                </div>
+            </div>   
+            <label for="birth-date">
+            Data de Nascimento
+            </label>
+            <div class="birth-date">
+                <input class="form-field js-field" id="newBirthdateConfirmation" name="birth-date" type="date" value="">
+            </div>
             <section class="button buttonConfirmation">
-                <button onclick="updating()" type="submit">Confirmar</button>
+                <button onclick="confirmUpdate()" type="submit">Atualizar</button>
                 <button onclick="cancel()" type="submit">Cancelar</button>
             </section>  
-    
-        `
+        `       
     } 
     catch(error){
-        warning.innerHTML = "Operação cancelada"
-        deleteWarning(warning)
-    }
-   
-    
-}
-
-function updating(){
-    try {
-        let userExists = true
-        //Recebo o nome do campo que o usuário deseja editar
-        let name = document.getElementById("nameConfirmation").value
-        let form = document.getElementById("confirmationForm")
-        if(!name){
-            warning.innerHTML="Não foi possível realizar a operação..."
-            deleteWarning(warning)
-        }
-        //faço um FOR para percorrer o localStorage e comparar o campo que deseja editar
-        for(let i = 0; i < localStorage.length; i++){
-
-            if(name.toUpperCase() == JSON.parse(localStorage[i]).name.toUpperCase() &&
-                JSON.parse(localStorage[i]).statusUser == "Ativo"){
-                    userExists = true
-                    //Crio o formulário para serem passados os novos dados
-                    form.innerHTML = `
-                        <div>
-                            <label for="name"><strong>Editando ${name}</strong></label>
-                            <br>
-                            <br>
-                            <label for="name">Nome</label>
-                            <div class="name">
-                            <input class="form-field js-field" id="nameConfirmation" maxlength="120" name="name" required type="text" placeholder="Digite seu nome" value="">
-                            <br>
-                            </div>
-                        </div>   
-                        <label for="birth-date">
-                        Data de Nascimento
-                        </label>
-                        <div class="birth-date">
-                            <input class="form-field js-field" id="birthdateConfirmation" name="birth-date" type="date" value="">
-                        </div>
-                        <section class="button buttonConfirmation">
-                            <button onclick="confirmUpdate()" type="submit">Atualizar</button>
-                            <button onclick="cancel()" type="submit">Cancelar</button>
-                        </section>  
-                        `
-                        //Encerro o loop
-                        i = localStorage.length
-            }
-            //Se o nome passado for diferente do armazenado, não será editado
-            else if(name.toUpperCase() != JSON.parse(localStorage[i]).name.toUpperCase()){
-                userExists = false
-            }
-        }
-        //Aviso que o usuário informado não existe
-        if(userExists == false){
-            warning.innerHTML = `O usuário "${name}" não existe`
-            deleteWarning(warning)
-            //Retiro o formulário da tela
-            form.innerHTML = ""
-            //Ativo os botões que não foram usados na atualização
-            activeButtons()
-        }
-       
-    } 
-    catch(error){
-        warning.innerHTML = "Operação cancelada"
+        warning.innerHTML = "Erro interno"
         deleteWarning(warning)
     } 
 }
@@ -98,27 +45,36 @@ function updating(){
 
 function confirmUpdate(){
     try {
+        //Recebo elementos e valores
         let form = document.getElementById("confirmationForm")
-        let newName = document.getElementById("nameConfirmation").value
-        let newDate = document.getElementById("birthdateConfirmation").value
-           
-        if(newName == "" || newDate == ""){
+        let name = document.getElementById("nameConfirmation").value
+        let newName = document.getElementById("newNameConfirmation").value
+        let newDate = document.getElementById("newBirthdateConfirmation").value
+        let userExists = true
+         
+        //Se o nome e a data estiverem vazios
+        if(newName == "" && newDate == ""){
             warning.innerHTML="Insira um nome e/ou uma data nova..."
             deleteWarning(warning)
             //i recebe o tamanho do localStorage para encerrar o FOR
             i = localStorage.length
+        }
+        //Se o nome antigo for igual ao novo
+        else if(name == newName){
+            warning.innerHTML = "Este nome já existe"
+            deleteWarning(warning)
         }
         //Se a variável conter números
         else if(/[0-9]/g.test(newName)){
             warning.innerHTML = "Digite o novo nome corretamente..."
             deleteWarning(warning)
         }
-        else if(newDate.length < 10 || newDate.length > 10){
+        else if(newDate.length > 10){
             warning.innerHTML = "Digite a nova data corretamente..."
             deleteWarning(warning)
         }
         else{
-            let userExists = false
+            //Monto a estrutura do usuário editado conforme os dados fornecidos
             let date = new Date(newDate);
             let formatDate = date.toLocaleDateString('pt-BR', {timeZone: 'UTC'});
             let user = {
@@ -126,9 +82,39 @@ function confirmUpdate(){
                 birthdate: formatDate,
                 statusUser: "Ativo"
             }
+            //Se não for fornecido o nome, ele permanecerá igual
+            if(newName == ""){
+                for(let i = 0; i < localStorage.length; i++){
+                    if(name.toUpperCase() == JSON.parse(localStorage[i]).name.toUpperCase()){
+                        let defaultName = JSON.parse(localStorage[i]).name
+                        user = {
+                            name: defaultName,
+                            birthdate: formatDate,
+                            statusUser: "Ativo"
+                        }
+                        i = localStorage.length
+                    }
+                }
+            }
+            //Se não for fornecido a data, ela permanecerá igual
+            else if(newDate == ""){
+                for(let i = 0; i < localStorage.length; i++){
+                    if(name.toUpperCase() == JSON.parse(localStorage[i]).name.toUpperCase()){
+                        let date = JSON.parse(localStorage[i]).birthdate
+                        user = {
+                            name: newName,
+                            birthdate: date,
+                            statusUser: "Ativo"
+                        }
+                        i = localStorage.length
+                    }
+                }   
+            }
             for(let i = 0; i < localStorage.length; i++){
-                if(user.name.toUpperCase() != JSON.parse(localStorage[i]).name.toUpperCase()){
-                    userExists = false
+                //Atualizando o usuário se ele existir no localStorage
+                if(name.toUpperCase() == JSON.parse(localStorage[i]).name.toUpperCase() &&
+                JSON.parse(localStorage[i]).statusUser == "Ativo"){
+                    userExists = true
                     //As informações são computadas no localStorage e são mostradas na tabela
                     localStorage.setItem(`${i}`, JSON.stringify(user))
                     let getTr = document.getElementById(`${i}`)
@@ -145,21 +131,19 @@ function confirmUpdate(){
                     //Ativo os botões que não foram usados na atualização
                     activeButtons()
                 }
-                
-                else if(user.name.toUpperCase() == JSON.parse(localStorage[i]).name.toUpperCase() &&
+                //Caso contrário, aparecerá um aviso na tela
+                else if(name.toUpperCase() != JSON.parse(localStorage[i]).name.toUpperCase() &&
                 JSON.parse(localStorage[i]).statusUser == "Ativo"){
-                    userExists = true
-                    i = localStorage.length
+                    userExists = false
                 }
             }
-    
-            if(userExists == true){
-                warning.innerHTML = "O novo nome de usuário já existe"
+            if(userExists == false){
+                warning.innerHTML = "Usuário inexistente"
                 deleteWarning(warning)
+                activeButtons()
             }
-        }    
-        
+        }           
     } catch (error) {
-        warning.innerHTML = "Operação cancelada"
+        warning.innerHTML = "Erro interno"
     }
 }
